@@ -4,13 +4,10 @@
   </div>
   <div class="container">
     <v-text-field
-  label="Stock Price"
-  placeholder="Enter Stock Price"
-  
-></v-text-field>
-    <v-btn variant="outlined">
-  Add Stock Price
-</v-btn>
+      label="Stock Price"
+      placeholder="Enter Stock Price"
+    ></v-text-field>
+    <v-btn variant="outlined"> Add Stock Price </v-btn>
   </div>
   <div class="middle-container">
     <div class="left-side">
@@ -18,10 +15,10 @@
     </div>
 
     <div class="right-side">
-      <p>Open: 89.9</p>
-      <p>Close: 99.8</p>
-      <p>High: 101.1</p>
-      <p>Low: 87.9</p>
+      <p>Open:{{ open }}</p>
+      <p>Close: {{ close }}</p>
+      <p>High: {{ high }}</p>
+      <p>Low: {{ low }}</p>
     </div>
   </div>
 </template>
@@ -48,8 +45,14 @@ export default {
   components: {
     Main,
   },
-  setup() {
+  data() {
+    this.open = 90.5;
+    this.close = 99.9;
+    this.low = 70.1;
+    this.high = 93.5;
+  },
 
+  setup() {
     let AlphaVentage_URL = computed(() => {
       return "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=IBM&apikey=Z050JS6XSMA6GUJQ";
     });
@@ -61,7 +64,6 @@ export default {
         stockMarketHistory = res;
 
         console.log(stockMarketHistory.data["Time Series (Daily)"]);
-
 
         dateRange;
       });
