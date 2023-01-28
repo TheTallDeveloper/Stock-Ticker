@@ -2,11 +2,33 @@
   <div class="StockPrices">
     <Main msg="Welcome to Stock Ticker Assessment" />
   </div>
+  <div class="container">
+    <v-text-field
+  label="Stock Price"
+  placeholder="Enter Stock Price"
+  
+></v-text-field>
+    <v-btn variant="outlined">
+  Add Stock Price
+</v-btn>
+  </div>
+  <div class="middle-container">
+    <div class="left-side">
+      <h3 class="green">99.9</h3>
+    </div>
+
+    <div class="right-side">
+      <p>Open: 89.9</p>
+      <p>Close: 99.8</p>
+      <p>High: 101.1</p>
+      <p>Low: 87.9</p>
+    </div>
+  </div>
 </template>
 
 <script>
 import Main from "@/components/Main.vue";
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import axios from "axios";
 
 let stockMarketHistory = [];
@@ -18,6 +40,7 @@ stockMarketHistoryDates;
 stockMarketHistoryEpochDates;
 stockMarketHistoryPrices;
 
+let close;
 export default {
   name: "StockPrices",
   mounted() {
@@ -27,14 +50,10 @@ export default {
     Main,
   },
   setup() {
-    let stockSympol = ref("IBM");
+    // let stockSympol = ref("IBM");
 
     let AlphaVentage_URL = computed(() => {
-      return (
-        "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=" +
-        stockSympol.value +
-        "&apikey=Z050JS6XSMA6GUJQ"
-      );
+      return "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=IBM&apikey=Z050JS6XSMA6GUJQ";
     });
 
     console.log(AlphaVentage_URL.value);
@@ -43,7 +62,10 @@ export default {
       axios.get(AlphaVentage_URL.value).then((res) => {
         stockMarketHistory = res;
 
-        console.log(stockMarketHistory.data["Monthly Adjusted Time Series"]);
+        console.log(stockMarketHistory.data["Time Series (Daily)"]);
+
+        // close = stockMarketHistory.data;
+        console.log(close);
 
         dateRange;
       });
@@ -54,3 +76,26 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.middle-container {
+  margin-top: 20px;
+  display: flex;
+  width: 50%;
+  background-color: #66ffff;
+  margin-left: 350px;
+}
+
+.left-side {
+  flex: 1;
+  margin: 10px;
+  margin-right: 250px;
+}
+
+.right-side {
+  margin-right: 150px;
+}
+.green {
+  color: green;
+}
+</style>
