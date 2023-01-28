@@ -40,7 +40,6 @@ stockMarketHistoryDates;
 stockMarketHistoryEpochDates;
 stockMarketHistoryPrices;
 
-let close;
 export default {
   name: "StockPrices",
   mounted() {
@@ -50,7 +49,6 @@ export default {
     Main,
   },
   setup() {
-    // let stockSympol = ref("IBM");
 
     let AlphaVentage_URL = computed(() => {
       return "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=IBM&apikey=Z050JS6XSMA6GUJQ";
@@ -64,8 +62,6 @@ export default {
 
         console.log(stockMarketHistory.data["Time Series (Daily)"]);
 
-        // close = stockMarketHistory.data;
-        console.log(close);
 
         dateRange;
       });
